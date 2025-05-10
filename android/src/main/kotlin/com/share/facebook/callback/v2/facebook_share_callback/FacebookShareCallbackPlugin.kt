@@ -45,7 +45,8 @@ import android.widget.ImageView
 
 
 /** FacebookShareCallbackPlugin */
-class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,ActivityPluginBinding.ActivityResultListener {
+class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
+    ActivityPluginBinding.ActivityResultListener {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -57,7 +58,7 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAw
     private var type: String? = null
     private var quote: String? = null
     private var url: String? = null
-    private var uint8Image: ByteArray
+    private var uint8Image: ByteArray? = null
     private var imageName: String? = null
 
 
