@@ -309,13 +309,12 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAw
 
         if (ShareDialog.canShow(ShareLinkContent::class.java)) {
             shareDialog.registerCallback(callbackManager!!, object : FacebookCallback<Sharer.Result> {
-                override fun onSuccess(sharerResult: Sharer.Result?) {
+                override fun onSuccess(result: Sharer.Result) {
                     println("--------------------success")
                     Handler(Looper.getMainLooper()).post {
                         result.success("success")
                     }
                 }
-
                 override fun onCancel() {
                     println("-----------------cancel")
                     Handler(Looper.getMainLooper()).post {
@@ -323,7 +322,7 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAw
                     }
                 }
 
-                override fun onError(error: FacebookException?) {
+                override fun onError(error: FacebookException) {
                     println("---------------error: ${error?.message}")
                     Handler(Looper.getMainLooper()).post {
                         result.error("ERROR", error?.message ?: "Unknown error", null)
@@ -349,21 +348,21 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAw
         val shareDialog = ShareDialog(activity!!)
 
         shareDialog.registerCallback(callbackManager!!, object : FacebookCallback<Sharer.Result> {
-            override fun onSuccess(sharerResult: Sharer.Result?) {
+            override fun onSuccess(sharerResult: Sharer.Result) {
                 println("--------------------success")
                 Handler(Looper.getMainLooper()).post {
-                    result.success(true)
+                    result.success("success")
                 }
             }
 
             override fun onCancel() {
                 println("-----------------cancel")
                 Handler(Looper.getMainLooper()).post {
-                    result.success(false)
+                    result.success("cancel")
                 }
             }
 
-            override fun onError(error: FacebookException?) {
+            override fun onError(error: FacebookException) {
                 println("---------------error: ${error?.message}")
                 Handler(Looper.getMainLooper()).post {
                     result.error("ERROR", error?.message ?: "Unknown error", null)
@@ -395,7 +394,7 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAw
             .addPhoto(photo)
             .build()
 
-        if (shareDialog.canShow(SharePhotoContent::class.java)) {
+        if (shareDialog.canShow(content)) {
             shareDialog.show(content)
         } else {
             Handler(Looper.getMainLooper()).post {
