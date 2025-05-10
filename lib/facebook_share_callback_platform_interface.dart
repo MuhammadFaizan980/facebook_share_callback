@@ -1,4 +1,4 @@
-import 'dart:typed_data' as td;
+import 'dart:typed_data';
 
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -29,7 +29,7 @@ abstract class FacebookShareCallbackPlatform extends PlatformInterface {
     required String type,
     String? quote,
     String? url,
-    td.Uint8List? uint8Image,
+    Uint8List? uint8Image,
     String? imageName,
   });
 }

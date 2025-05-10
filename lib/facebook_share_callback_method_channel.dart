@@ -1,5 +1,3 @@
-import 'dart:typed_data' as td;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -16,7 +14,7 @@ class MethodChannelFacebookShareCallback extends FacebookShareCallbackPlatform {
     required String type,
     String? quote,
     String? url,
-    td.Uint8List? uint8Image,
+    Uint8List? uint8Image,
     String? imageName,
   }) async {
     final result = await methodChannel.invokeMethod<String?>('facebook_share', {

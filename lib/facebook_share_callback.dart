@@ -1,4 +1,4 @@
-import 'dart:typed_data' as td;
+import 'dart:typed_data';
 
 import 'facebook_share_callback_platform_interface.dart';
 
@@ -9,7 +9,7 @@ class FacebookShareCallback {
     required ShareType type,
     String? quote,
     String? url,
-    td.Uint8List? uint8Image,
+    Uint8List? uint8Image,
     String? imageName,
   }) {
     return FacebookShareCallbackPlatform.instance.shareFacebook(
