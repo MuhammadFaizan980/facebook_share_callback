@@ -114,7 +114,7 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler {
             imageName = call.argument("imageName")
             when (type) {
                 "ShareType.shareLinksFacebook" -> shareLinksFacebook(url, quote, result)
-//                "ShareType.sharePhotoFacebook" -> sharePhotoFacebook(uint8Image, quote, result)
+                "ShareType.sharePhotoFacebook" -> sharePhotoFacebook(uint8Image, quote, result)
                 else -> result.notImplemented()
             }
         }
@@ -155,39 +155,39 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     private fun sharePhotoFacebook(uint8Image: ByteArray, quote: String, result2: Result) {
-//        println("--------------------sharePhotoFacebook")
-//
-//        val shareDialog = ShareDialog(activity)
-//
-//        shareDialog.registerCallback(callbackManager, object : FacebookCallback<Sharer.Result> {
-//            override fun onSuccess(result: Sharer.Result?) {
-//                println("--------------------success")
-//                result2.success(true)
-//            }
-//
-//            override fun onCancel() {
-//                println("-----------------cancel")
-//                result2.success(false)
-//            }
-//
-//            override fun onError(error: FacebookException?) {
-//                println("---------------error")
-//                result2.success(false)
-//            }
-//        })
-//
-//        val photo = SharePhoto.Builder()
-//            .setBitmap(BitmapFactory.decodeByteArray(uint8Image, 0, uint8Image.size))
-//            .setCaption(quote)
-//            .build()
-//
-//        val content = SharePhotoContent.Builder()
-//            .addPhoto(photo)
-//            .build()
-//
-//        if (shareDialog.canShow(SharePhotoContent::class.java)) {
-//            shareDialog.show(content)
-//        }
+        println("--------------------sharePhotoFacebook")
+
+        val shareDialog = ShareDialog(activity)
+
+        shareDialog.registerCallback(callbackManager, object : FacebookCallback<Sharer.Result> {
+            override fun onSuccess(result: Sharer.Result?) {
+                println("--------------------success")
+                result2.success(true)
+            }
+
+            override fun onCancel() {
+                println("-----------------cancel")
+                result2.success(false)
+            }
+
+            override fun onError(error: FacebookException?) {
+                println("---------------error")
+                result2.success(false)
+            }
+        })
+
+        val photo = SharePhoto.Builder()
+            .setBitmap(BitmapFactory.decodeByteArray(uint8Image, 0, uint8Image.size))
+            .setCaption(quote)
+            .build()
+
+        val content = SharePhotoContent.Builder()
+            .addPhoto(photo)
+            .build()
+
+        if (shareDialog.canShow(SharePhotoContent::class.java)) {
+            shareDialog.show(content)
+        }
     }
 
 

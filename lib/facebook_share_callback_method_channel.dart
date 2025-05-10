@@ -1,4 +1,4 @@
-import 'dart:nativewrappers/_internal/vm/lib/typed_data_patch.dart' as td;
+import 'dart:typed_data' as td;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';

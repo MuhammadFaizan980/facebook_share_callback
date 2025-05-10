@@ -1,4 +1,4 @@
-import 'dart:nativewrappers/_internal/vm/lib/typed_data_patch.dart';
+import 'dart:typed_data' as td;
 
 import 'facebook_share_callback_platform_interface.dart';
 
@@ -9,7 +9,7 @@ class FacebookShareCallback {
     required ShareType type,
     String? quote,
     String? url,
-    Uint8List? uint8Image,
+    td.Uint8List? uint8Image,
     String? imageName,
   }) {
     return FacebookShareCallbackPlatform.instance.shareFacebook(
