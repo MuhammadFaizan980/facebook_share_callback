@@ -43,19 +43,15 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAw
 
     override fun onAttachedToActivity(@NonNull binding: ActivityPluginBinding) {
         activity = binding.activity
-        // Register activity result listener
         binding.addActivityResultListener { requestCode, resultCode, data ->
             callbackManager?.onActivityResult(requestCode, resultCode, data) ?: false
         }
     }
 
-    override fun onDetachedFromActivityForConfigChanges() {
-        // No implementation
-    }
+    override fun onDetachedFromActivityForConfigChanges() {}
 
     override fun onReattachedToActivityForConfigChanges(@NonNull binding: ActivityPluginBinding) {
         activity = binding.activity
-        // Re-register activity result listener
         binding.addActivityResultListener { requestCode, resultCode, data ->
             callbackManager?.onActivityResult(requestCode, resultCode, data) ?: false
         }
@@ -96,27 +92,37 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAw
     }
 
     private fun shareLinksFacebook(url: String?, quote: String?, result: Result) {
-        val shareDialog = ShareDialog(activity)
+        if (activity == null || callbackManager == null) {
+            result.error("ERROR", "Activity or callback manager is null", null)
+            return
+        }
+        val shareDialog = ShareDialog(activity!!)
         val content = ShareLinkContent.Builder()
             .setContentUrl(url?.let { Uri.parse(it) })
             .setQuote(quote)
             .build()
 
         if (ShareDialog.canShow(ShareLinkContent::class.java)) {
-            shareDialog.registerCallback(callbackManager, object : FacebookCallback<Sharer.Result> {
-                override fun onSuccess(sharerResult: Sharer.Result) {
+            shareDialog.registerCallback(callbackManager!!, object : FacebookCallback<Sharer.Result> {
+                override fun onSuccess(sharerResult: Sharer.Result?) {
                     println("--------------------success")
-                    result.success("success")
+                    android.os.Handler(android.os.Looper.getMainLooper()).post {
+                        result.success("success")
+                    }
                 }
 
                 override fun onCancel() {
                     println("-----------------cancel")
-                    result.success("cancel")
+                    android.os.Handler(android.os.Looper.getMainLooper()).post {
+                        result.success("cancel")
+                    }
                 }
 
-                override fun onError(error: FacebookException) {
-                    println("---------------error: ${error.message}")
-                    result.error("ERROR", error.message, null)
+                override fun onError(error: FacebookException?) {
+                    println("---------------error: ${error?.message}")
+                    android.os.Handler(android.os.Looper.getMainLooper()).post {
+                        result.error("ERROR", error?.message, null)
+                    }
                 }
             })
             shareDialog.show(content)
@@ -127,22 +133,32 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAw
 
     private fun sharePhotoFacebook(uint8Image: ByteArray?, quote: String?, result: Result) {
         println("--------------------sharePhotoFacebook")
-        val shareDialog = ShareDialog(activity)
+        if (activity == null || callbackManager == null) {
+            result.error("ERROR", "Activity or callback manager is null", null)
+            return
+        }
+        val shareDialog = ShareDialog(activity!!)
 
-        shareDialog.registerCallback(callbackManager, object : FacebookCallback<Sharer.Result> {
+        shareDialog.registerCallback(callbackManager!!, object : FacebookCallback<Sharer.Result> {
             override fun onSuccess(sharerResult: Sharer.Result?) {
                 println("--------------------success")
-                result.success(true)
+                android.os.Handler(android.os.Looper.getMainLooper()).post {
+                    result.success(true)
+                }
             }
 
             override fun onCancel() {
                 println("-----------------cancel")
-                result.success(false)
+                android.os.Handler(android.os.Looper.getMainLooper()).post {
+                    result.success(false)
+                }
             }
 
             override fun onError(error: FacebookException?) {
                 println("---------------error: ${error?.message}")
-                result.success(false)
+                android.os.Handler(android.os.Looper.getMainLooper()).post {
+                    result.success(false)
+                }
             }
         })
 
