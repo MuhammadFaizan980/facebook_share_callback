@@ -83,21 +83,15 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAw
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        if (call.method == "getPlatformVersion") {
-            result.success("Android ${android.os.Build.VERSION.RELEASE}")
-        } else if (call.method.equalsIgnoreCase("facebook_share")) {
-            type = call.argument("type")
-            quote = call.argument("quote")
-            url = call.argument("url")
-            uint8Image = call.argument("uint8Image")
-            imageName = call.argument("imageName")
-            when (type) {
-                "ShareType.shareLinksFacebook" -> shareLinksFacebook(url, quote, result)
-                "ShareType.sharePhotoFacebook" -> sharePhotoFacebook(uint8Image, quote, result)
-                else -> result.notImplemented()
-            }
-        } else {
-            result.notImplemented()
+        type = call.argument("type")
+        quote = call.argument("quote")
+        url = call.argument("url")
+        uint8Image = call.argument("uint8Image")
+        imageName = call.argument("imageName")
+        when (type) {
+            "ShareType.shareLinksFacebook" -> shareLinksFacebook(url, quote, result)
+            "ShareType.sharePhotoFacebook" -> sharePhotoFacebook(uint8Image, quote, result)
+            else -> result.notImplemented()
         }
     }
 
