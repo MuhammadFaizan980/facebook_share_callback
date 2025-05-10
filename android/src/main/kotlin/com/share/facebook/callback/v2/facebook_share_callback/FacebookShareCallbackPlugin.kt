@@ -309,7 +309,7 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAw
 
         if (ShareDialog.canShow(ShareLinkContent::class.java)) {
             shareDialog.registerCallback(callbackManager!!, object : FacebookCallback<Sharer.Result> {
-                override fun onSuccess(result: Sharer.Result) {
+                override fun onSuccess(rslt: Sharer.Result) {
                     println("--------------------success")
                     Handler(Looper.getMainLooper()).post {
                         result.success("success")
@@ -348,7 +348,7 @@ class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAw
         val shareDialog = ShareDialog(activity!!)
 
         shareDialog.registerCallback(callbackManager!!, object : FacebookCallback<Sharer.Result> {
-            override fun onSuccess(sharerResult: Sharer.Result) {
+            override fun onSuccess(rslt: Sharer.Result) {
                 println("--------------------success")
                 Handler(Looper.getMainLooper()).post {
                     result.success("success")
