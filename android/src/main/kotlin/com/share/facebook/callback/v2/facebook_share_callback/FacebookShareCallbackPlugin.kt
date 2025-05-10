@@ -30,7 +30,6 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 
-import io.flutter.plugin.common.PluginRegistry.Registrar
 import io.flutter.plugin.common.BinaryMessenger
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -43,11 +42,10 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import io.flutter.plugin.common.PluginRegistry
 
 
 /** FacebookShareCallbackPlugin */
-class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler {
+class FacebookShareCallbackPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
