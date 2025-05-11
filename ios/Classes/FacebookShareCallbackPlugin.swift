@@ -65,7 +65,7 @@ public class FacebookShareCallbackPlugin: NSObject, FlutterPlugin, SharingDelega
                 shareContent.quote = quoteString
             }
             
-            let shareDialog = ShareDialog.from(viewController: viewController, content: shareContent, delegate: self)
+            let shareDialog = ShareDialog(viewController: viewController, content: shareContent, delegate: self)
             shareDialog.show()
         }
     }
@@ -87,7 +87,7 @@ public class FacebookShareCallbackPlugin: NSObject, FlutterPlugin, SharingDelega
             let content = SharePhotoContent()
             content.photos = [photo]
             
-            let shareDialog = ShareDialog.from(viewController: viewController, content: content, delegate: self)
+            let shareDialog = ShareDialog(viewController: viewController, content: content, delegate: self)
             shareDialog.show()
         }
     }
