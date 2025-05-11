@@ -99,7 +99,7 @@ public class FacebookShareCallbackPlugin: NSObject, FlutterPlugin, SharingDelega
 
             let shareDialog = ShareDialog(
                 viewController: viewController, content: content, delegate: self)
-            if ShareDialog.canShow(ShareLinkContent.self) {
+            if ShareDialog.canShow(SharePhotoContent.self) {
                 shareDialog.show()
             } else {
                 NSLog("Facebook ShareDialog cannot be shown on this device")
