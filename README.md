@@ -1,17 +1,11 @@
 # facebook_share_callback
 
-Flutter Plugin for sharing contents to Facebook.
+Flutter Plugin for sharing urls and photos to Facebook with success and error callbacks.
 
 You can use it share to Facebook. Support Url and Text, Photo
 
-support:
-
-Android & iOS : Facebook
-Note: This plugin is still under development, and some APIs might not be available yet.
-Feedback and Pull Requests are most welcome!
-
 ## Getting Started
-add share_facebook_callback as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
+add facebook_share_callback as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
 Please check the latest version before installation.
 ```
@@ -19,7 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   # add share_facebook_callback
-  share_facebook_callback: ^0.0.1
+  facebook_share_callback: [LATEST_VERSION]
 ```
 
 ## Setup
@@ -28,9 +22,12 @@ dependencies:
 
 Add "facebook app id" to the application tag of AndroidManifest.xml
 ```
+    //add this under manifest (oustside <application> tag)
+    <queries>
+        <provider android:authorities="com.facebook.katana.provider.PlatformProvider" /> 
+    </queries>
     <application>
-       ...
-       //add this 
+       //add this inside <application> tag
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -40,13 +37,9 @@ Add "facebook app id" to the application tag of AndroidManifest.xml
             
         <provider
             android:name="com.facebook.FacebookContentProvider"
-            android:authorities="com.facebook.app.FacebookContentProvider[facebook_app_id]"
+            android:authorities="com.facebook.app.FacebookContentProvider[FB_APP_ID]"
             android:exported="true" />
     </application>
-
-    <queries>
-        <provider android:authorities="com.facebook.katana.provider.PlatformProvider" /> 
-    </queries>
 ```
 
 string.xml:
@@ -61,33 +54,67 @@ string.xml:
 ```
 #### IOS
 
-##### setup facebook
-
 make sure you add below deatils in your plist file.
 
 ```
-<key>FacebookAppID</key>
-<string>fbid</string>
-<key>FacebookClientToken</key>
-<string>123456789abcdefghimnl</string>
-<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb-your-fb-id</string>
-			</array>
-		</dict>
-	</array>
+    <key>FacebookAppID</key>
+    <string>[FB_APP_ID]</string>
 
-```
-Note-: Make sure you add fb in  at start of your fb Id in CFBundleURLSchemes.
+    <key>FacebookClientToken</key>
+    <string>[FB_CLIENT_TOKEN]</string>
 
-Add below value in url scheme(Refer to example).
-
-```<key>LSApplicationQueriesSchemes</key>
-	<array>
-        <string>fbapi</string>
-        <string>fb-messenger-share-api</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>fb[FB_APP_ID]</string>
+        </array>
+      </dict>
     </array>
+
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-api</string>
+      <string>fbshareextension</string>
+    </array>
+
 ```
+
+## Usage
+#### Link Sharing
+import the package
+```
+import 'package:facebook_share_callback/facebook_share_callback.dart';
+```
+and then call the function like below:
+```
+    final shareFacebookCallbackPlugin = FacebookShareCallback();
+
+    String? result = await shareFacebookCallbackPlugin.shareFacebook(
+      type: ShareType.shareLinksFacebook,
+      quote: quote,
+      url: url,
+    );
+```
+
+#### Picture Sharing
+import the package
+```
+import 'package:facebook_share_callback/facebook_share_callback.dart';
+```
+and then call the function like below:
+```
+    final shareFacebookCallbackPlugin = FacebookShareCallback();
+    
+    String? result = await shareFacebookCallbackPlugin.shareFacebook(
+      type: ShareType.sharePhotoFacebook,
+      quote: 'This is my picture',
+      imageName: 'My image name',
+      uint8Image: image.readAsBytesSync(), // pick image from gallery or camera using iamge picker package or file picker or similar
+    );
+```
+
+#### Callbacks
+Result is a **nullable** string, if user successfully shares the link or picture to facebook, its value will be **success**
