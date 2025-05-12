@@ -1,5 +1,5 @@
 name: facebook_share_callback
-description: "A new Flutter project."
+description: "Flutter package to share URL or Picture to facebook using facebook share dialog with callbacks"
 version: 0.0.1
 homepage: "https://github.com/MuhammadFaizan980/facebook_share_callback"
 

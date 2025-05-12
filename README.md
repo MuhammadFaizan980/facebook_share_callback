@@ -1,6 +1,6 @@
 # facebook_share_callback
 
-Flutter Plugin for sharing urls and photos to Facebook with success and error callbacks.
+Flutter package to share URL or Picture to facebook using facebook share dialog with callbacks.
 
 You can use it share to Facebook. Support Url and Text, Photo
 
@@ -118,3 +118,6 @@ and then call the function like below:
 
 #### Callbacks
 Result is a **nullable** string, if user successfully shares the link or picture to facebook, its value will be **success**
+
+#### Note
+Facebook share dialog for iOS is part of iOS facebook app itself and it will not work on iOS simulators, use real iOS device for testing
