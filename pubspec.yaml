@@ -1,7 +1,7 @@
 name: facebook_share_callback
 description: "A new Flutter project."
 version: 0.0.1
-homepage:
+homepage: "https://github.com/MuhammadFaizan980/facebook_share_callback"
 
 environment:
   sdk: ^3.7.0
